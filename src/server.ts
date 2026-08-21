@@ -12,7 +12,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     {
       name: 'convert',
-      description: 'Convert a value between units of length, mass, time or temperature.',
+      description: 'Convert a value between units of length, mass, time, temperature, area or volume.',
       inputSchema: {
         type: 'object',
         properties: {

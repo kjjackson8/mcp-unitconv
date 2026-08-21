@@ -62,9 +62,35 @@ test('dimensionOf finds the right dimension', () => {
   assert.equal(dimensionOf('nope'), null);
 });
 
+test('area: hectare to m2', () => {
+  const r = convert(1, 'ha', 'm2');
+  assert.equal(r.value, 10000);
+  assert.equal(r.dimension, 'area');
+});
+
+test('area: acre to ft2', () => {
+  const r = convert(1, 'acre', 'ft2');
+  assert.ok(Math.abs(r.value - 43560) < 1e-6);
+});
+
+test('volume: gal to l', () => {
+  const r = convert(1, 'gal', 'l');
+  assert.ok(Math.abs(r.value - 3.785411784) < 1e-9);
+  assert.equal(r.dimension, 'volume');
+});
+
+test('volume: m3 to l', () => {
+  const r = convert(1, 'm3', 'l');
+  assert.equal(r.value, 1000);
+});
+
+test('rejects area/volume dimension mismatch', () => {
+  assert.throws(() => convert(1, 'ha', 'l'));
+});
+
 test('supportedUnits includes every unit family plus temperature', () => {
   const units = supportedUnits();
-  for (const u of ['m', 'km', 'kg', 'lb', 's', 'h', 'C', 'F', 'K']) {
+  for (const u of ['m', 'km', 'kg', 'lb', 's', 'h', 'C', 'F', 'K', 'ha', 'acre', 'l', 'gal']) {
     assert.ok(units.includes(u), `missing ${u}`);
   }
 });
